@@ -53,7 +53,7 @@ as_year(rd, calendar = calendar("b2k")) # Before 2000
 
 ## -----------------------------------------------------------------------------
 format(rd) # Default calendar (Gregorian Common Era)
-format(rd, format = "ka", calendar = calendar("BP"))
+format(rd, prefix = "ka", calendar = calendar("BP"))
 
 ## -----------------------------------------------------------------------------
 ## Set seed for reproductibility
