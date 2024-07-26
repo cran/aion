@@ -1,536 +1,273 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-
-<meta charset="utf-8" />
-<meta name="generator" content="pandoc" />
-<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
-
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
-<meta name="author" content="N. Frerebeau" />
-
-<meta name="date" content="2023-10-26" />
-
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Extending aion</title>
-
-<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
-// be compatible with the behavior of Pandoc < 2.8).
-document.addEventListener('DOMContentLoaded', function(e) {
-  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
-  var i, h, a;
-  for (i = 0; i < hs.length; i++) {
-    h = hs[i];
-    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
-    a = h.attributes;
-    while (a.length > 0) h.removeAttribute(a[0].name);
-  }
-});
-</script>
-
 <style type="text/css">
-code{white-space: pre-wrap;}
-span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
+/**
+ * Prism.s theme ported from highlight.js's xcode style
+ */
+pre code {
+  padding: 1em;
+}
+.token.comment {
+  color: #007400;
+}
+.token.punctuation {
+  color: #999;
+}
+.token.tag,
+.token.selector {
+  color: #aa0d91;
+}
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol {
+  color: #1c00cf;
+}
+.token.property,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin {
+  color: #c41a16;
+}
+.token.inserted {
+  background-color: #ccffd8;
+}
+.token.deleted {
+  background-color: #ffebe9;
+}
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #9a6e3a;
+}
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #836c28;
+}
+.token.function,
+.token.class-name {
+  color: #DD4A68;
+}
+.token.regex,
+.token.important,
+.token.variable {
+  color: #5c2699;
+}
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+.token.italic {
+  font-style: italic;
+}
 </style>
-
-
-
 <style type="text/css">
-code {
-white-space: pre;
+body {
+  font-family: sans-serif;
+  max-width: 800px;
+  margin: auto;
+  padding: 1em;
+  line-height: 1.5;
+  box-sizing: border-box;
 }
-.sourceCode {
-overflow: visible;
+body, .footnotes, code { font-size: .9em; }
+li li { font-size: .95em; }
+*, *:before, *:after {
+  box-sizing: inherit;
 }
-</style>
-<style type="text/css" data-origin="pandoc">
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+pre, img { max-width: 100%; }
+pre, pre:hover {
+  white-space: pre-wrap;
+  word-break: break-all;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre code {
+  display: block;
+  overflow-x: auto;
 }
-pre.numberSource code
-{ counter-reset: source-line 0; }
-pre.numberSource code > span
-{ position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-{ content: counter(source-line);
-position: relative; left: -1em; text-align: right; vertical-align: baseline;
-border: none; display: inline-block;
--webkit-touch-callout: none; -webkit-user-select: none;
--khtml-user-select: none; -moz-user-select: none;
--ms-user-select: none; user-select: none;
-padding: 0 4px; width: 4em;
-color: #aaaaaa;
-}
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
-div.sourceCode
-{ }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-code span.al { color: #ff0000; font-weight: bold; } 
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.at { color: #7d9029; } 
-code span.bn { color: #40a070; } 
-code span.bu { color: #008000; } 
-code span.cf { color: #007020; font-weight: bold; } 
-code span.ch { color: #4070a0; } 
-code span.cn { color: #880000; } 
-code span.co { color: #60a0b0; font-style: italic; } 
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.do { color: #ba2121; font-style: italic; } 
-code span.dt { color: #902000; } 
-code span.dv { color: #40a070; } 
-code span.er { color: #ff0000; font-weight: bold; } 
-code span.ex { } 
-code span.fl { color: #40a070; } 
-code span.fu { color: #06287e; } 
-code span.im { color: #008000; font-weight: bold; } 
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
-code span.kw { color: #007020; font-weight: bold; } 
-code span.op { color: #666666; } 
-code span.ot { color: #007020; } 
-code span.pp { color: #bc7a00; } 
-code span.sc { color: #4070a0; } 
-code span.ss { color: #bb6688; } 
-code span.st { color: #4070a0; } 
-code span.va { color: #19177c; } 
-code span.vs { color: #4070a0; } 
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
-</style>
-<script>
-// apply pandoc div.sourceCode style to pre.sourceCode instead
-(function() {
-  var sheets = document.styleSheets;
-  for (var i = 0; i < sheets.length; i++) {
-    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
-    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
-    var j = 0;
-    while (j < rules.length) {
-      var rule = rules[j];
-      // check if there is a div.sourceCode rule
-      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
-        j++;
-        continue;
-      }
-      var style = rule.style.cssText;
-      // check if color or background-color is set
-      if (rule.style.color === '' && rule.style.backgroundColor === '') {
-        j++;
-        continue;
-      }
-      // replace div.sourceCode by a pre.sourceCode rule
-      sheets[i].deleteRule(j);
-      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
-    }
-  }
-})();
-</script>
-
-
-
-<style type="text/css">
-
-div.csl-bib-body { }
-div.csl-entry {
-clear: both;
-}
-.hanging div.csl-entry {
-margin-left:2em;
-text-indent:-2em;
-}
-div.csl-left-margin {
-min-width:2em;
-float:left;
-}
-div.csl-right-inline {
-margin-left:2em;
-padding-left:1em;
-}
-div.csl-indent {
-margin-left: 2em;
-}
-</style>
-
-<style type="text/css">body {
-background-color: #fff;
-margin: 1em auto;
-max-width: 700px;
-overflow: visible;
-padding-left: 2em;
-padding-right: 2em;
-font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-font-size: 14px;
-line-height: 1.35;
-}
-#TOC {
-clear: both;
-margin: 0 0 10px 10px;
-padding: 4px;
-width: 400px;
-border: 1px solid #CCCCCC;
-border-radius: 5px;
-background-color: #f6f6f6;
-font-size: 13px;
-line-height: 1.3;
-}
-#TOC .toctitle {
-font-weight: bold;
-font-size: 15px;
-margin-left: 5px;
-}
-#TOC ul {
-padding-left: 40px;
-margin-left: -1.5em;
-margin-top: 5px;
-margin-bottom: 5px;
-}
-#TOC ul ul {
-margin-left: -2em;
-}
-#TOC li {
-line-height: 16px;
+code { font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace; }
+:not(pre) > code, code[class] { background-color: #F8F8F8; }
+code.language-undefined, pre > code:not([class]) {
+  background-color: inherit;
+  border: 1px solid #eee;
 }
 table {
-margin: 1em auto;
-border-width: 1px;
-border-color: #DDDDDD;
-border-style: outset;
-border-collapse: collapse;
+  margin: auto;
+  border-top: 1px solid #666;
 }
-table th {
-border-width: 2px;
-padding: 5px;
-border-style: inset;
-}
-table td {
-border-width: 1px;
-border-style: inset;
-line-height: 18px;
-padding: 5px 5px;
-}
-table, table th, table td {
-border-left-style: none;
-border-right-style: none;
-}
-table thead, table tr.even {
-background-color: #f7f7f7;
-}
-p {
-margin: 0.5em 0;
-}
+table thead th { border-bottom: 1px solid #ddd; }
+th, td { padding: 5px; }
+thead, tfoot, tr:nth-child(even) { background: #eee; }
 blockquote {
-background-color: #f6f6f6;
-padding: 0.25em 0.75em;
+  color: #666;
+  margin: 0;
+  padding-left: 1em;
+  border-left: 0.5em solid #eee;
 }
-hr {
-border-style: solid;
-border: none;
-border-top: 1px solid #777;
-margin: 28px 0;
+hr, .footnotes::before { border: 1px dashed #ddd; }
+.frontmatter { text-align: center; }
+#TOC .numbered li { list-style: none; }
+#TOC .numbered { padding-left: 0; }
+#TOC .numbered ul { padding-left: 1em; }
+table, .body h2 { border-bottom: 1px solid #666; }
+.body .appendix, .appendix ~ h2 { border-bottom-style: dashed; }
+.footnote-ref a::before { content: "["; }
+.footnote-ref a::after { content: "]"; }
+section.footnotes::before {
+  content: "";
+  display: block;
+  max-width: 20em;
 }
-dl {
-margin-left: 0;
-}
-dl dd {
-margin-bottom: 13px;
-margin-left: 13px;
-}
-dl dt {
-font-weight: bold;
-}
-ul {
-margin-top: 0;
-}
-ul li {
-list-style: circle outside;
-}
-ul ul {
-margin-bottom: 0;
-}
-pre, code {
-background-color: #f7f7f7;
-border-radius: 3px;
-color: #333;
-white-space: pre-wrap; 
-}
-pre {
-border-radius: 3px;
-margin: 5px 0px 10px 0px;
-padding: 10px;
-}
-pre:not([class]) {
-background-color: #f7f7f7;
-}
-code {
-font-family: Consolas, Monaco, 'Courier New', monospace;
-font-size: 85%;
-}
-p > code, li > code {
-padding: 2px 0px;
-}
-div.figure {
-text-align: center;
-}
-img {
-background-color: #FFFFFF;
-padding: 2px;
-border: 1px solid #DDDDDD;
-border-radius: 3px;
-border: 1px solid #CCCCCC;
-margin: 0 5px;
-}
-h1 {
-margin-top: 0;
-font-size: 35px;
-line-height: 40px;
-}
-h2 {
-border-bottom: 4px solid #f7f7f7;
-padding-top: 10px;
-padding-bottom: 2px;
-font-size: 145%;
-}
-h3 {
-border-bottom: 2px solid #f7f7f7;
-padding-top: 10px;
-font-size: 120%;
-}
-h4 {
-border-bottom: 1px solid #f7f7f7;
-margin-left: 8px;
-font-size: 105%;
-}
-h5, h6 {
-border-bottom: 1px solid #ccc;
-font-size: 105%;
-}
-a {
-color: #0033dd;
-text-decoration: none;
-}
-a:hover {
-color: #6666ff; }
-a:visited {
-color: #800080; }
-a:visited:hover {
-color: #BB00BB; }
-a[href^="http:"] {
-text-decoration: underline; }
-a[href^="https:"] {
-text-decoration: underline; }
 
-code > span.kw { color: #555; font-weight: bold; } 
-code > span.dt { color: #902000; } 
-code > span.dv { color: #40a070; } 
-code > span.bn { color: #d14; } 
-code > span.fl { color: #d14; } 
-code > span.ch { color: #d14; } 
-code > span.st { color: #d14; } 
-code > span.co { color: #888888; font-style: italic; } 
-code > span.ot { color: #007020; } 
-code > span.al { color: #ff0000; font-weight: bold; } 
-code > span.fu { color: #900; font-weight: bold; } 
-code > span.er { color: #a61717; background-color: #e3d2d2; } 
+@media print {
+  body {
+    font-size: 12pt;
+    max-width: 100%;
+  }
+  tr, img { page-break-inside: avoid; }
+}
+@media only screen and (min-width: 992px) {
+  pre { white-space: pre; }
+}
 </style>
-
-
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
 </head>
-
 <body>
-
-
-
-
-<h1 class="title toc-ignore">Extending aion</h1>
-<h4 class="author">N. Frerebeau</h4>
-<h4 class="date">2023-10-26</h4>
-
-
+<div class="frontmatter">
+<div class="title"><h1>Extending aion</h1></div>
+<div class="author"><h2>N. Frerebeau</h2></div>
+<div class="date"><h3>2024-07-26</h3></div>
+</div>
+<div class="body">
 <div id="TOC">
-<ul>
-<li><a href="#calendars-and-dates" id="toc-calendars-and-dates"><span class="toc-section-number">1</span> Calendars and Dates</a></li>
-<li><a href="#time-series" id="toc-time-series"><span class="toc-section-number">2</span> Time Series</a></li>
-<li><a href="#references" id="toc-references">References</a></li>
+<ul class="numbered">
+<li><a href="#calendars-and-dates"><span class="section-number">1.</span> Calendars and Dates</a></li>
+<li><a href="#time-series"><span class="section-number">2.</span> Time Series</a></li>
+<li><a href="#references"><span class="section-number">3.</span> References</a></li>
 </ul>
 </div>
-
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(aion)</span></code></pre></div>
-<p><strong>aion</strong> offers a simple API that can be extended and
-used by other specialized packages.</p>
+<pre><code class="language-r">library(aion)
+</code></pre>
+<p><strong>aion</strong> offers a simple API that can be extended and used by other specialized packages.</p>
 <p>The following packages rely on <strong>aion</strong>:</p>
 <ul>
-<li><a href="https://github.com/tesselle/ananke"><strong>ananke</strong></a>
-(quantitative chronology in archaeology).</li>
-<li><a href="https://github.com/tesselle/kairos"><strong>kairos</strong></a>
-v2.0 (analysis of chronological patterns from archaeological count
-data).</li>
-<li><a href="https://github.com/ArchaeoStat/ArchaeoPhases"><strong>ArchaeoPhases</strong></a>
-v2.0 (post-processing of MCMC simulations for chronological
-modelling).</li>
+<li><a href="https://github.com/tesselle/ananke"><strong>ananke</strong></a> (quantitative chronology in archaeology).</li>
+<li><a href="https://github.com/tesselle/kairos"><strong>kairos</strong></a> v2.0 (analysis of chronological patterns from archaeological count data).</li>
+<li><a href="https://github.com/ArchaeoStat/ArchaeoPhases"><strong>ArchaeoPhases</strong></a> v2.0 (post-processing of MCMC simulations for chronological modelling).</li>
 </ul>
-<div id="calendars-and-dates" class="section level1" number="1">
-<h1><span class="header-section-number">1</span> Calendars and
-Dates</h1>
-<p>The following example is used to build a simple solar calendar with
-365 days each year and no leap-year rule. This is the ancient Egyptian
-calendar. You will find full details of the calculations and detailed
-explanations in <span class="citation">Reingold and Dershowitz
-(2018)</span> (p. 29).</p>
-<p>You can define additional calendars by creating S4 classes that
-inherit from the <code>TimeScale</code> class exported by
-<strong>aion</strong>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="do">## Egyptian calendar</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>E <span class="ot">&lt;-</span> <span class="fu">setClass</span>(</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>  <span class="at">Class =</span> <span class="st">&quot;EgyptianCalendar&quot;</span>,</span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>  <span class="at">prototype =</span> <span class="fu">list</span>(</span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>    <span class="at">name =</span> <span class="st">&quot;Egyptian&quot;</span>,</span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>    <span class="at">fixed =</span> <span class="sc">-</span><span class="dv">272787</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>    <span class="at">direction =</span> 1L,</span>
-<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="at">year =</span> <span class="dv">365</span></span>
-<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>  ),</span>
-<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;TimeScale&quot;</span></span>
-<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>)</span></code></pre></div>
-<p>Once the calendar has been defined, you need to build methods for
-converting <em>rata die</em> to and from this calendar:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="do">## Convert Egyptian dates to rata die</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="do">## NB: this method MUST return a RataDie object</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">setMethod</span>(</span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="at">f =</span> <span class="st">&quot;fixed&quot;</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>  <span class="at">signature =</span> <span class="fu">c</span>(</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    <span class="at">year =</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    <span class="at">month =</span> <span class="st">&quot;numeric&quot;</span>,</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="at">day =</span> <span class="st">&quot;numeric&quot;</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    <span class="at">calendar =</span> <span class="st">&quot;EgyptianCalendar&quot;</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a>  ),</span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>  <span class="at">definition =</span> <span class="cf">function</span>(year, month, day, calendar) {</span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>    rd <span class="ot">&lt;-</span> <span class="fu">calendar_fixed</span>(calendar) <span class="sc">+</span> </span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>      <span class="dv">365</span> <span class="sc">*</span> (year <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a>      <span class="dv">30</span> <span class="sc">*</span> (month <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>      day <span class="sc">-</span> <span class="dv">1</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>    </span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a>    <span class="fu">as_fixed</span>(rd)</span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>  }</span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>)</span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="do">## Convert rata die to Egyptian dates</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="do">## NB: this method MUST return a data.frame</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="fu">setMethod</span>(</span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>  <span class="at">f =</span> <span class="st">&quot;as_date&quot;</span>,</span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a>  <span class="at">signature =</span> <span class="fu">c</span>(<span class="at">object =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">calendar =</span> <span class="st">&quot;EgyptianCalendar&quot;</span>),</span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>  <span class="at">definition =</span> <span class="cf">function</span>(object, calendar) {</span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a>    day <span class="ot">&lt;-</span> object <span class="sc">-</span> <span class="fu">calendar_fixed</span>(calendar)</span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>    year <span class="ot">&lt;-</span> day <span class="sc">%/%</span> <span class="dv">365</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>    month <span class="ot">&lt;-</span> (day <span class="sc">%%</span> <span class="dv">365</span>) <span class="sc">%/%</span> <span class="dv">30</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>    day <span class="ot">&lt;-</span> day <span class="sc">-</span> <span class="dv">365</span> <span class="sc">*</span> (year <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">-</span> <span class="dv">30</span> <span class="sc">*</span> (month <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>    </span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>    <span class="fu">data.frame</span>(<span class="at">year =</span> year, <span class="at">month =</span> month, <span class="at">day =</span> day)</span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a>  }</span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>)</span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="do">## Convert rata die to Egyptian years</span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="fu">setMethod</span>(</span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>  <span class="at">f =</span> <span class="st">&quot;as_year&quot;</span>,</span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a>  <span class="at">signature =</span> <span class="fu">c</span>(<span class="at">object =</span> <span class="st">&quot;numeric&quot;</span>, <span class="at">calendar =</span> <span class="st">&quot;EgyptianCalendar&quot;</span>),</span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>  <span class="at">definition =</span> <span class="cf">function</span>(object, calendar, ...) {</span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>    (object <span class="sc">-</span> <span class="fu">calendar_fixed</span>(calendar)) <span class="sc">%/%</span> <span class="dv">365</span> <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>  }</span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a>)</span></code></pre></div>
+<h1 id="calendars-and-dates"><span class="section-number">1.</span> Calendars and Dates</h1>
+<p>The following example is used to build a simple solar calendar with 365 days each year and no leap-year rule. This is the ancient Egyptian calendar. You will find full details of the calculations and detailed explanations in Reingold and Dershowitz (2018, p. 29).</p>
+<p>You can define additional calendars by creating S4 classes that inherit from the <code>TimeScale</code> class exported by <strong>aion</strong>:</p>
+<pre><code class="language-r">## Egyptian calendar
+E &lt;- setClass(
+  Class = &quot;EgyptianCalendar&quot;,
+  prototype = list(
+    name = &quot;Egyptian&quot;,
+    fixed = -272787,
+    direction = 1L,
+    year = 365
+  ),
+  contains = &quot;TimeScale&quot;
+)
+</code></pre>
+<p>Once the calendar has been defined, you need to build methods for converting <em>rata die</em> to and from this calendar:</p>
+<pre><code class="language-r">## Convert Egyptian dates to rata die
+## NB: this method MUST return a RataDie object
+setMethod(
+  f = &quot;fixed&quot;,
+  signature = c(
+    year = &quot;numeric&quot;,
+    month = &quot;numeric&quot;,
+    day = &quot;numeric&quot;, 
+    calendar = &quot;EgyptianCalendar&quot;
+  ),
+  definition = function(year, month, day, calendar) {
+    rd &lt;- calendar_fixed(calendar) + 
+      365 * (year - 1) + 
+      30 * (month - 1) + 
+      day - 1
+    
+    as_fixed(rd)
+  }
+)
+
+## Convert rata die to Egyptian dates
+## NB: this method MUST return a data.frame
+setMethod(
+  f = &quot;as_date&quot;,
+  signature = c(object = &quot;numeric&quot;, calendar = &quot;EgyptianCalendar&quot;),
+  definition = function(object, calendar) {
+    day &lt;- object - calendar_fixed(calendar)
+    year &lt;- day %/% 365 + 1
+    month &lt;- (day %% 365) %/% 30 + 1
+    day &lt;- day - 365 * (year - 1) - 30 * (month - 1) + 1
+    
+    data.frame(year = year, month = month, day = day)
+  }
+)
+
+## Convert rata die to Egyptian years
+setMethod(
+  f = &quot;as_year&quot;,
+  signature = c(object = &quot;numeric&quot;, calendar = &quot;EgyptianCalendar&quot;),
+  definition = function(object, calendar, ...) {
+    (object - calendar_fixed(calendar)) %/% 365 + 1
+  }
+)
+</code></pre>
 <p>Now you can use your calendar:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="do">## Create a calendar object</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>cal <span class="ot">&lt;-</span> <span class="fu">E</span>()</span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="do">## Convert 161/7/15 in rata die</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="fu">fixed</span>(</span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">161</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>  <span class="at">month =</span> <span class="dv">7</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>  <span class="at">day =</span> <span class="dv">15</span>, </span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>  <span class="at">calendar =</span> cal</span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a>)</span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; Rata die: number of days since 01-01-01 (Gregorian).</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; [1] -214193</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="do">## Convert -214193 r.d. to an Egyptian date</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="fu">as_date</span>(<span class="sc">-</span><span class="dv">214193</span>, <span class="at">calendar =</span> cal)</span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt;   year month day</span></span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a><span class="co">#&gt; 1  161     7  15</span></span></code></pre></div>
-<p>The definition of new calendars, combined with the Julian and
-Gregorian calendars already included in <strong>aion</strong>, allows
-you to build conversion tools:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="do">## Build a conversion function from Gregorian CE years to Egyptian years</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>Gregorian_to_Egyptian <span class="ot">&lt;-</span> <span class="fu">convert</span>(<span class="fu">CE</span>(), <span class="fu">E</span>())</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="do">## Convert 2023 (Gregorian) to the Egyptian calendar</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="fu">Gregorian_to_Egyptian</span>(<span class="dv">2023</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; [1] 2771</span></span></code></pre></div>
+<pre><code class="language-r">## Create a calendar object
+cal &lt;- E()
+
+## Convert 161/7/15 in rata die
+fixed(
+  year = 161,
+  month = 7,
+  day = 15, 
+  calendar = cal
+)
+#&gt; Rata die: number of days since 01-01-01 (Gregorian).
+#&gt; [1] -214193
+
+## Convert -214193 r.d. to an Egyptian date
+as_date(-214193, calendar = cal)
+#&gt;   year month day
+#&gt; 1  161     7  15
+</code></pre>
+<p>The definition of new calendars, combined with the Julian and Gregorian calendars already included in <strong>aion</strong>, allows you to build conversion tools:</p>
+<pre><code class="language-r">## Build a conversion function from Gregorian CE years to Egyptian years
+Gregorian_to_Egyptian &lt;- convert(CE(), E())
+
+## Convert 2023 (Gregorian) to the Egyptian calendar
+Gregorian_to_Egyptian(2023)
+#&gt; [1] 2771
+</code></pre>
+<h1 id="time-series"><span class="section-number">2.</span> Time Series</h1>
+<p>A time series object is simply an \(n \times m \times p\) <code>array</code>, with \(n\) being the number of observations, \(m\) being the number of series and with the \(p\) columns of the third dimension containing extra variables for each series. This <code>array</code> comes with an extra <code>time</code> slot that store the observations times expressed in <em>rata die</em>. You can create classes that inherits from the <code>TimeSeries</code> class.</p>
+<p>As an example, you can create a class that represent the results of the calibration of radiocarbon dates (this code comes from the <a href="https://packages.tesselle.org/ananke/"><strong>ananke</strong></a> package):</p>
+<pre><code class="language-r">.CalibratedAges &lt;- setClass(
+  Class = &quot;CalibratedAges&quot;,
+  slots = c(
+    ages = &quot;numeric&quot;,     # Stores the radiocarbon ages to be calibrated
+    errors = &quot;numeric&quot;,   # Store the standard deviation of the radiocarbon ages
+    curves = &quot;character&quot;  # Store the name of the calibration curve
+  ),
+  contains = &quot;TimeSeries&quot;
+)
+</code></pre>
+<p>All methods defined in <strong>aion</strong> can then be used on objects belonging to this new class (e.g. <code>plot()</code>).</p>
+<h1 id="references"><span class="section-number">3.</span> References</h1>
+<p>Reingold, Edward M., and Nachum Dershowitz. 2018. <em>Calendrical Calculations: The Ultimate Edition</em>. 4th ed. Cambridge University Press. <a href="https://doi.org/10.1017/9781107415058">https://doi.org/10.1017/9781107415058</a>.</p>
 </div>
-<div id="time-series" class="section level1" number="2">
-<h1><span class="header-section-number">2</span> Time Series</h1>
-<p>A time series object is simply an <span class="math inline">\(n
-\times m \times p\)</span> <code>array</code>, with <span class="math inline">\(n\)</span> being the number of observations, <span class="math inline">\(m\)</span> being the number of series and with the
-<span class="math inline">\(p\)</span> columns of the third dimension
-containing extra variables for each series. This <code>array</code>
-comes with an extra <code>time</code> slot that store the observations
-times expressed in <em>rata die</em>. You can create classes that
-inherits from the <code>TimeSeries</code> class.</p>
-<p>As an example, you can create a class that represent the results of
-the calibration of radiocarbon dates (this code comes from the <a href="https://packages.tesselle.org/ananke/"><strong>ananke</strong></a>
-package):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>.CalibratedAges <span class="ot">&lt;-</span> <span class="fu">setClass</span>(</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>  <span class="at">Class =</span> <span class="st">&quot;CalibratedAges&quot;</span>,</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>  <span class="at">slots =</span> <span class="fu">c</span>(</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a>    <span class="at">ages =</span> <span class="st">&quot;numeric&quot;</span>,     <span class="co"># Stores the radiocarbon ages to be calibrated</span></span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a>    <span class="at">errors =</span> <span class="st">&quot;numeric&quot;</span>,   <span class="co"># Store the standard deviation of the radiocarbon ages</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a>    <span class="at">curves =</span> <span class="st">&quot;character&quot;</span>  <span class="co"># Store the name of the calibration curve</span></span>
-<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a>  ),</span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a>  <span class="at">contains =</span> <span class="st">&quot;TimeSeries&quot;</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a>)</span></code></pre></div>
-<p>All methods defined in <strong>aion</strong> can then be used on
-objects belonging to this new class (e.g. <code>plot()</code>).</p>
-</div>
-<div id="references" class="section level1 unnumbered">
-<h1 class="unnumbered">References</h1>
-<div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-reingold2018" class="csl-entry">
-Reingold, Edward M., and Nachum Dershowitz. 2018. <em>Calendrical
-<span>Calculations</span>: <span>The Ultimate Edition</span></em>. 4th
-ed. <span>Cambridge University Press</span>. <a href="https://doi.org/10.1017/9781107415058">https://doi.org/10.1017/9781107415058</a>.
-</div>
-</div>
-</div>
-
-
-
-<!-- code folding -->
-
-
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/autoloader/prism-autoloader.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
 </body>
 </html>

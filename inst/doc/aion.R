@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -56,17 +56,21 @@ format(rd) # Default calendar (Gregorian Common Era)
 format(rd, prefix = "ka", calendar = calendar("BP"))
 
 ## -----------------------------------------------------------------------------
-## Set seed for reproductibility
-set.seed(12345)
+## Get ceramic counts (data from Husi 2022)
+data("loire", package = "folio")
 
-## 6 x 50 observations...
-obs <- matrix(rnorm(300), nrow = 50, ncol = 6)
+## Keep only variables whose total is at least 600
+keep <- c("01f", "01k", "01L", "08e", "08t", "09b", "15i", "15q")
 
-## ...sampled every two years starting from 2000 BP
-spl <- seq(from = 2000, by = -2, length.out = 50)
+## Get time midpoints
+mid <- rowMeans(loire[, c("lower", "upper")])
 
-## Create time series
-(X <- series(object = obs, time = spl, calendar = BP()))
+## Create time-series
+(X <- series(
+  object = loire[, keep],
+  time = mid,
+  calendar = calendar("AD")
+))
 
 ## -----------------------------------------------------------------------------
 ## Time series duration
@@ -85,8 +89,11 @@ end(X, calendar = CE())
 time(X, calendar = BP())
 
 ## ----plot-multiple, fig.width=7, fig.height=5---------------------------------
-## Multiple plot
-plot(X) # Default calendar
+## Multiple plot (default calendar)
+plot(
+  x = X, 
+  type = "h" # histogram like vertical lines
+)
 
 ## ----plot-single, fig.width=7, fig.height=3.5---------------------------------
 ## Extract the first series
@@ -95,6 +102,7 @@ Y <- X[, 1, ]
 ## Plot a single series
 plot(
   Y,
+  type = "h", # histogram like vertical lines
   calendar = b2k(), # b2k time scale
   panel.first = graphics::grid() # Add a grid
 )
