@@ -8,13 +8,13 @@
 \description{
 \if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
-A toolkit for archaeological time series. This package provides a system of classes and methods to represent and work with archaeological time series. Dates are represented as "rata die" and can be converted to (virtually) any calendar defined by Reingold and Dershowitz (2018) \doi{10.1017/9781107415058}. This packages offers a simple API that can be used by other specialized packages.
+A toolkit for archaeological time series and time intervals. This package provides a system of classes and methods to represent and work with archaeological time series and time intervals. Dates are represented as "rata die" and can be converted to (virtually) any calendar defined by Reingold and Dershowitz (2018) \doi{10.1017/9781107415058}. This packages offers a simple API that can be used by other specialized packages.
 }
 \details{
 \tabular{ll}{
 \strong{Package:} \tab aion \cr
 \strong{Type:} \tab Package \cr
-\strong{Version:} \tab 1.0.4 \cr
+\strong{Version:} \tab 1.1.0 \cr
 \strong{License:} \tab GPL-3 \cr
 \strong{Zenodo:} \tab \doi{10.5281/zenodo.8032278} \cr
 }

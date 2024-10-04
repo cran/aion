@@ -4,10 +4,13 @@
 \name{subset}
 \alias{subset}
 \alias{[,RataDie-method}
+\alias{[,TimeIntervals-method}
 \alias{[,TimeSeries-method}
 \title{Extract or Replace Parts of an Object}
 \usage{
 \S4method{[}{RataDie}(x, i)
+
+\S4method{[}{TimeIntervals}(x, i)
 
 \S4method{[}{TimeSeries}(x, i, j, k, drop = FALSE)
 }
@@ -26,6 +29,12 @@ A subsetted object.
 }
 \description{
 Operators acting on objects to extract or replace parts.
+}
+\seealso{
+Other mutators: 
+\code{\link{as.data.frame}()},
+\code{\link{labels}()},
+\code{\link{length}()}
 }
 \author{
 N. Frerebeau

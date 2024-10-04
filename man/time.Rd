@@ -7,7 +7,7 @@
 \alias{frequency-method}
 \alias{time,TimeSeries-method}
 \alias{frequency,TimeSeries-method}
-\title{Sampling Times of Time Series}
+\title{Sampling Times}
 \usage{
 \S4method{time}{TimeSeries}(x, calendar = NULL)
 
@@ -20,7 +20,7 @@
 (see \code{\link[=calendar]{calendar()}}). If \code{NULL} (the default), \emph{rata die} are returned.}
 }
 \value{
-A \code{\link{numeric}} vector.
+A \code{\link{numeric}} vector of decimal years (if \code{calendar} is not \code{NULL}).
 }
 \description{
 Get the sampling times:
@@ -57,9 +57,8 @@ df <- as.data.frame(Y, calendar = BP())
 head(df)
 }
 \seealso{
-Other time series tools: 
-\code{\link{data.frame}},
-\code{\link{series}()},
+Other tools: 
+\code{\link{overlap}()},
 \code{\link{span}()},
 \code{\link{start}()},
 \code{\link{window}()}
@@ -67,4 +66,4 @@ Other time series tools:
 \author{
 N. Frerebeau
 }
-\concept{time series tools}
+\concept{tools}
