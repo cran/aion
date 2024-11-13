@@ -1,3 +1,6 @@
+Sys.setenv(LANGUAGE = "en") # Force locale
+options(aion.calendar = calendar("CE"))
+
 # Unknown calendar =============================================================
 expect_error(calendar("XXX"), "Unknown calendar")
 
@@ -21,8 +24,8 @@ expect_true(is_julian(J))
 expect_false(is_gregorian(J))
 
 expect_identical(format(J), "Julian years")
-expect_identical(calendar_label(J), character(0))
-expect_identical(calendar_name(J), character(0))
+expect_identical(calendar_label(J), "")
+expect_identical(calendar_name(J), "")
 expect_identical(calendar_epoch(J), 1)
 expect_identical(calendar_direction(J), 1)
 expect_identical(aion:::calendar_fixed(J), -1)

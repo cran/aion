@@ -2,7 +2,7 @@
 #'  \tabular{ll}{
 #'   **Package:** \tab aion \cr
 #'   **Type:** \tab Package \cr
-#'   **Version:** \tab 1.1.0 \cr
+#'   **Version:** \tab 1.2.0 \cr
 #'   **License:** \tab GPL-3 \cr
 #'   **Zenodo:** \tab \doi{10.5281/zenodo.8032278} \cr
 #'  }
@@ -40,6 +40,6 @@
 "_PACKAGE"
 
 #' @import arkhe
-#' @importFrom methods Arith as callGeneric callNextMethod is new setGeneric
-#' setMethod setValidity .valueClassTest
+#' @import methods
+#' @importFrom stats end frequency start time window
 NULL

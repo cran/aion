@@ -9,12 +9,16 @@ setMethod(
   f = "intervals",
   signature = c(start = "RataDie", end = "RataDie", calendar = "missing"),
   definition = function(start, end, names = NULL) {
+    n <- length(start)
+    arkhe::assert_length(end, n)
+
     ## Set the names
     if (is.null(names)) {
-      names <- paste0("I", seq_len(length(start)))
+      names <- paste0("I", seq_len(n))
     } else {
       names <- as.character(names)
     }
+    arkhe::assert_length(names, n)
 
     .TimeIntervals(.Id = names, .Start = start, .End = end)
   }
@@ -37,7 +41,7 @@ setMethod(
 
     ## End
     if (methods::is(end, "RataDie")) {
-      msg <- "%s is already expressed in rata die: %s is ignored."
+      msg <- tr_("%s is already expressed in rata die: %s is ignored.")
       warning(sprintf(msg, sQuote("end"), sQuote("calendar")), call. = FALSE)
     } else {
       end <- fixed(end, calendar = calendar, scale = scale)

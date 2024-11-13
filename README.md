@@ -71,7 +71,7 @@ Series.” *Journal of Open Source Software*, *9*(96).
 Frerebeau N, Roe J (2024). *aion: Archaeological Time Series*.
 Université Bordeaux Montaigne, Pessac, France.
 <doi:10.5281/zenodo.8032278> <https://doi.org/10.5281/zenodo.8032278>, R
-package version 1.1.0, <https://packages.tesselle.org/aion/>.
+package version 1.2.0, <https://packages.tesselle.org/aion/>.
 
 This package is a part of the tesselle project
 <https://www.tesselle.org>.
@@ -143,6 +143,20 @@ plot(x = Y)
 ```
 
 ![](man/figures/README-time-intervals-1.png)<!-- -->
+
+## Translation
+
+This package provides translations of user-facing communications, like
+messages, warnings and errors, and graphical elements (axis labels). The
+preferred language is by default taken from the locale. This can be
+overridden by setting of the environment variable `LANGUAGE` (you only
+need to do this once per session):
+
+``` r
+Sys.setenv(LANGUAGE = "<language code>")
+```
+
+Languages currently available are English (`en`) and French (`fr`).
 
 ## Related Works
 

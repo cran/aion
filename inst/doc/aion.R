@@ -41,7 +41,7 @@ fixed(2000.161, calendar = calendar("CE"))
 ## -----------------------------------------------------------------------------
 ## Create a vector of 10 years BP (Gregorian)
 ## (every 20 years starting from 2000 BP)
-(years <- seq(from = 20000, by = -20, length.out = 10))
+(years <- seq(from = 2000, by = -20, length.out = 10))
 
 ## Convert years to rata die
 (rd <- fixed(years, calendar = calendar("BP")))

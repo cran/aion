@@ -6,6 +6,19 @@ knitr::opts_chunk$set(
 
 ## ----setup--------------------------------------------------------------------
 library(aion)
+library(methods)
+
+## -----------------------------------------------------------------------------
+## Years since 753 BC (the traditional founding of Rome)
+AUC <- new(
+  Class = "GregorianCalendar",
+  label = "AUC",               # Abbreviated label
+  name = "Ab urbe condita",    # Name of the time scale
+  epoch = 753,                 # Epoch from which years are counted
+  direction = 1L               # Count years forwards from epoch
+)
+
+AUC
 
 ## -----------------------------------------------------------------------------
 ## Egyptian calendar

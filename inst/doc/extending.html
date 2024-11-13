@@ -143,17 +143,19 @@ section.footnotes::before {
 <div class="frontmatter">
 <div class="title"><h1>Extending aion</h1></div>
 <div class="author"><h2>N. Frerebeau</h2></div>
-<div class="date"><h3>2024-10-04</h3></div>
+<div class="date"><h3>2024-11-13</h3></div>
 </div>
 <div class="body">
 <div id="TOC">
 <ul class="numbered">
-<li><a href="#calendars-and-dates"><span class="section-number">1.</span> Calendars and Dates</a></li>
-<li><a href="#time-series"><span class="section-number">2.</span> Time Series</a></li>
-<li><a href="#references"><span class="section-number">3.</span> References</a></li>
+<li><a href="#epochs"><span class="section-number">1.</span> Epochs</a></li>
+<li><a href="#calendars-and-dates"><span class="section-number">2.</span> Calendars and Dates</a></li>
+<li><a href="#time-series"><span class="section-number">3.</span> Time Series</a></li>
+<li><a href="#references"><span class="section-number">4.</span> References</a></li>
 </ul>
 </div>
 <pre><code class="language-r">library(aion)
+library(methods)
 </code></pre>
 <p><strong>aion</strong> offers a simple API that can be extended and used by other specialized packages.</p>
 <p>The following packages rely on <strong>aion</strong>:</p>
@@ -162,7 +164,22 @@ section.footnotes::before {
 <li><a href="https://github.com/tesselle/kairos"><strong>kairos</strong></a> v2.0 (analysis of chronological patterns from archaeological count data).</li>
 <li><a href="https://github.com/ArchaeoStat/ArchaeoPhases"><strong>ArchaeoPhases</strong></a> v2.0 (post-processing of MCMC simulations for chronological modelling).</li>
 </ul>
-<h1 id="calendars-and-dates"><span class="section-number">1.</span> Calendars and Dates</h1>
+<h1 id="epochs"><span class="section-number">1.</span> Epochs</h1>
+<p>An epoch is an instant in time chosen as the origin of a particular calendar era. With <strong>aion</strong>, you can work with different Gregorian calendar epochs: <code>BC()</code>, <code>BCE()</code>, <code>AD()</code>, <code>CE()</code>, <code>BP()</code>, <code>b2k()</code>.</p>
+<p>It is also possible to create objects representing specific periods of the Gregorian calendar. Simply create a <code>GregorianCalendar</code> class object:</p>
+<pre><code class="language-r">## Years since 753 BC (the traditional founding of Rome)
+AUC &lt;- new(
+  Class = &quot;GregorianCalendar&quot;,
+  label = &quot;AUC&quot;,               # Abbreviated label
+  name = &quot;Ab urbe condita&quot;,    # Name of the time scale
+  epoch = 753,                 # Epoch from which years are counted
+  direction = 1L               # Count years forwards from epoch
+)
+
+AUC
+#&gt; Ab urbe condita (AUC): Années grégoriennes comptées à partir de 753.
+</code></pre>
+<h1 id="calendars-and-dates"><span class="section-number">2.</span> Calendars and Dates</h1>
 <p>The following example is used to build a simple solar calendar with 365 days each year and no leap-year rule. This is the ancient Egyptian calendar. You will find full details of the calculations and detailed explanations in Reingold and Dershowitz (2018, p. 29).</p>
 <p>You can define additional calendars by creating S4 classes that inherit from the <code>TimeScale</code> class exported by <strong>aion</strong>:</p>
 <pre><code class="language-r">## Egyptian calendar
@@ -233,7 +250,7 @@ fixed(
   day = 15, 
   calendar = cal
 )
-#&gt; Rata die: number of days since 01-01-01 (Gregorian).
+#&gt; Rata die : nombre de jours depuis le 01-01-01 (grégorien).
 #&gt; [1] -214193
 
 ## Convert -214193 r.d. to an Egyptian date
@@ -249,7 +266,7 @@ Gregorian_to_Egyptian &lt;- convert(CE(), E())
 Gregorian_to_Egyptian(2023)
 #&gt; [1] 2771
 </code></pre>
-<h1 id="time-series"><span class="section-number">2.</span> Time Series</h1>
+<h1 id="time-series"><span class="section-number">3.</span> Time Series</h1>
 <p>A time series object is simply an \(n \times m \times p\) <code>array</code>, with \(n\) being the number of observations, \(m\) being the number of series and with the \(p\) columns of the third dimension containing extra variables for each series. This <code>array</code> comes with an extra <code>time</code> slot that store the observations times expressed in <em>rata die</em>. You can create classes that inherits from the <code>TimeSeries</code> class.</p>
 <p>As an example, you can create a class that represent the results of the calibration of radiocarbon dates (this code comes from the <a href="https://packages.tesselle.org/ananke/"><strong>ananke</strong></a> package):</p>
 <pre><code class="language-r">.CalibratedAges &lt;- setClass(
@@ -263,7 +280,7 @@ Gregorian_to_Egyptian(2023)
 )
 </code></pre>
 <p>All methods defined in <strong>aion</strong> can then be used on objects belonging to this new class (e.g. <code>plot()</code>).</p>
-<h1 id="references"><span class="section-number">3.</span> References</h1>
+<h1 id="references"><span class="section-number">4.</span> References</h1>
 <p>Reingold, Edward M., and Nachum Dershowitz. 2018. <em>Calendrical Calculations: The Ultimate Edition</em>. 4th ed. Cambridge University Press. <a href="https://doi.org/10.1017/9781107415058">https://doi.org/10.1017/9781107415058</a>.</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-core.min.js" defer></script>
