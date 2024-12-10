@@ -143,7 +143,7 @@ section.footnotes::before {
 <div class="frontmatter">
 <div class="title"><h1>Extending aion</h1></div>
 <div class="author"><h2>N. Frerebeau</h2></div>
-<div class="date"><h3>2024-11-13</h3></div>
+<div class="date"><h3>2024-12-10</h3></div>
 </div>
 <div class="body">
 <div id="TOC">
@@ -166,7 +166,7 @@ library(methods)
 </ul>
 <h1 id="epochs"><span class="section-number">1.</span> Epochs</h1>
 <p>An epoch is an instant in time chosen as the origin of a particular calendar era. With <strong>aion</strong>, you can work with different Gregorian calendar epochs: <code>BC()</code>, <code>BCE()</code>, <code>AD()</code>, <code>CE()</code>, <code>BP()</code>, <code>b2k()</code>.</p>
-<p>It is also possible to create objects representing specific periods of the Gregorian calendar. Simply create a <code>GregorianCalendar</code> class object:</p>
+<p>It is also possible to create objects representing specific epochs of the Gregorian calendar. Simply create a <code>GregorianCalendar</code> class object:</p>
 <pre><code class="language-r">## Years since 753 BC (the traditional founding of Rome)
 AUC &lt;- new(
   Class = &quot;GregorianCalendar&quot;,
@@ -177,7 +177,7 @@ AUC &lt;- new(
 )
 
 AUC
-#&gt; Ab urbe condita (AUC): Années grégoriennes comptées à partir de 753.
+#&gt; Ab urbe condita (AUC): Années grégoriennes comptées à partir de 753
 </code></pre>
 <h1 id="calendars-and-dates"><span class="section-number">2.</span> Calendars and Dates</h1>
 <p>The following example is used to build a simple solar calendar with 365 days each year and no leap-year rule. This is the ancient Egyptian calendar. You will find full details of the calculations and detailed explanations in Reingold and Dershowitz (2018, p. 29).</p>
@@ -250,7 +250,7 @@ fixed(
   day = 15, 
   calendar = cal
 )
-#&gt; Rata die : nombre de jours depuis le 01-01-01 (grégorien).
+#&gt; Rata die : nombre de jours depuis le 01-01-01 (grégorien)
 #&gt; [1] -214193
 
 ## Convert -214193 r.d. to an Egyptian date
