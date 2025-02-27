@@ -13,8 +13,7 @@ calendar(object)
 }
 \arguments{
 \item{object}{A \code{\link{character}} string specifying the abbreviated label of
-the time scale (see details) or an object from which to extract the time
-scale.}
+the time scale (see details).}
 }
 \value{
 A \code{\linkS4class{TimeScale}} object.
@@ -54,8 +53,9 @@ J()
 Other calendar tools: 
 \code{\link{calendar_get}},
 \code{\link{convert}()},
+\code{\link{get_calendar}()},
 \code{\link{gregorian}},
-\code{\link{is}()},
+\code{\link{is_calendar}()},
 \code{\link{julian}()}
 }
 \author{

@@ -92,6 +92,73 @@ J <- function(...) {
   )
 }
 
+# Default calendar =============================================================
+#' @export
+#' @rdname get_calendar
+#' @aliases get_calendar,ANY-method
+setMethod(
+  f = "get_calendar",
+  signature = "ANY",
+  definition = function(...) {
+    cal <- getOption("aion.calendar", default = function(...) calendar("CE"))
+    if (!is.function(cal)) {
+      stop(tr_("Default calendar is invalid."), call. = FALSE)
+    }
+    cal()
+  }
+)
+
+#' @export
+#' @rdname get_calendar
+#' @aliases set_calendar,character-method
+setMethod(
+  f = "set_calendar",
+  signature = "character",
+  definition = function(object) {
+    cal <- function(...) calendar(object)
+    options(aion.calendar = cal)
+    invisible(cal())
+  }
+)
+
+#' @export
+#' @rdname get_calendar
+#' @aliases set_calendar,missing-method
+setMethod(
+  f = "set_calendar",
+  signature = "missing",
+  definition = function() {
+    methods::callGeneric("CE")
+  }
+)
+
+# Predicates ===================================================================
+#' Is an Object a Calendar?
+#'
+#' Test inheritance relationships between an object and a calendar class.
+#' @param object Any \R object.
+#' @return
+#'  A [`logical`] scalar.
+#' @author N. Frerebeau
+#' @docType methods
+#' @family calendar tools
+#' @export
+is_calendar <- function(object) {
+  methods::is(object, "TimeScale")
+}
+
+#' @export
+#' @rdname is_calendar
+is_gregorian <- function(object) {
+  methods::is(object, "GregorianCalendar")
+}
+
+#' @export
+#' @rdname is_calendar
+is_julian <- function(object) {
+  methods::is(object, "JulianCalendar")
+}
+
 # Mutators =====================================================================
 ## Getters ---------------------------------------------------------------------
 #' @export

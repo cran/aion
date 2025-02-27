@@ -21,15 +21,15 @@ BP()
 
 ## -----------------------------------------------------------------------------
 ## Get default calendar
-getOption("aion.calendar")
+get_calendar()
 
 ## Change default calendar to BP
-options(aion.calendar = BP())
-getOption("aion.calendar")
+set_calendar("BP")
+get_calendar()
 
 ## Set it back to Gregorian Common Era
-options(aion.calendar = CE())
-getOption("aion.calendar")
+set_calendar("CE")
+get_calendar()
 
 ## -----------------------------------------------------------------------------
 ## Convert 2000-02-29 (Gregorian) to rata die

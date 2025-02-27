@@ -2,17 +2,15 @@
 #'  \tabular{ll}{
 #'   **Package:** \tab aion \cr
 #'   **Type:** \tab Package \cr
-#'   **Version:** \tab 1.3.0 \cr
+#'   **Version:** \tab 1.4.0 \cr
 #'   **License:** \tab GPL-3 \cr
 #'   **Zenodo:** \tab \doi{10.5281/zenodo.8032278} \cr
 #'  }
 #'
 #' @section Package options:
 #'  \pkg{aion} uses the following [options()] to configure behaviour:
-#'  * `aion.precision`: an [`integer`] indicating the number of decimal
-#'    places (defaults to `NA`).
-#'  * `aion.calendar`: a [`TimeScale-class`] object (default calendar for
-#'    printing).
+#'  * `aion.calendar`: a function that returns a [`TimeScale-class`] object
+#'    specifying the default calendar (see [get_calendar()]).
 #'
 #' @author
 #'  **Full list of authors and contributors** (alphabetic order):

@@ -8,7 +8,7 @@ bibentry(
   journal      = "Journal of Open Source Software",
   volume       = "9",
   number       = "96",
-  page         = "6210",
+  pages        = "6210",
   doi          = "10.21105/joss.06210"
 )
 bibentry(
@@ -17,7 +17,7 @@ bibentry(
   author       = c(person("Nicolas", "Frerebeau", role = "aut"),
                    person("Joe", "Roe", role = "aut")),
   title        = "{aion: Archaeological Time Series}",
-  year         = "2024",
+  year         = "2025",
   organization = "Université Bordeaux Montaigne",
   address      = "Pessac, France",
   note         = sprintf("R package version %s", meta$Version),

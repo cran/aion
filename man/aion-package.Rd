@@ -14,7 +14,7 @@ A toolkit for archaeological time series and time intervals. This package provid
 \tabular{ll}{
 \strong{Package:} \tab aion \cr
 \strong{Type:} \tab Package \cr
-\strong{Version:} \tab 1.3.0 \cr
+\strong{Version:} \tab 1.4.0 \cr
 \strong{License:} \tab GPL-3 \cr
 \strong{Zenodo:} \tab \doi{10.5281/zenodo.8032278} \cr
 }
@@ -23,19 +23,17 @@ A toolkit for archaeological time series and time intervals. This package provid
 
 \pkg{aion} uses the following \code{\link[=options]{options()}} to configure behaviour:
 \itemize{
-\item \code{aion.precision}: an \code{\link{integer}} indicating the number of decimal
-places (defaults to \code{NA}).
-\item \code{aion.calendar}: a \code{\linkS4class{TimeScale}} object (default calendar for
-printing).
+\item \code{aion.calendar}: a function that returns a \code{\linkS4class{TimeScale}} object
+specifying the default calendar (see \code{\link[=get_calendar]{get_calendar()}}).
 }
 }
 
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://codeberg.org/tesselle/aion}
   \item \url{https://packages.tesselle.org/aion/}
-  \item \url{https://github.com/tesselle/aion}
-  \item Report bugs at \url{https://github.com/tesselle/aion/issues}
+  \item Report bugs at \url{https://codeberg.org/tesselle/aion/issues}
 }
 
 }

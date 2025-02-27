@@ -1,15 +1,17 @@
 Package: aion
 Title: Archaeological Time Series
-Version: 1.3.0
+Version: 1.4.0
 Authors@R: c(
     person("Nicolas", "Frerebeau", , "nicolas.frerebeau@u-bordeaux-montaigne.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5759-4944")),
     person("Joe", "Roe", , "joseph.roe@iaw.unibe.ch", role = "aut",
            comment = c(ORCID = "0000-0002-1011-1244")),
-    person("Brice", "Lebrun", , "brice.lebrun@u-bordeaux-montaigne.fr", role = "ctb",
+    person("Brice", "Lebrun", role = "art",
            comment = c(ORCID = "0000-0001-7503-8685", "Logo designer")),
-    person("Université Bordeaux Montaigne", role = "fnd"),
-    person("CNRS", role = "fnd")
+    person("Université Bordeaux Montaigne", role = "fnd",
+           comment = c(ROR = "03pbgwk21")),
+    person("CNRS", role = "fnd",
+           comment = c(ROR = "02feahw73"))
   )
 Description: A toolkit for archaeological time series and time intervals.
     This package provides a system of classes and methods to represent and
@@ -19,31 +21,35 @@ Description: A toolkit for archaeological time series and time intervals.
     <doi:10.1017/9781107415058>. This packages offers a simple API that
     can be used by other specialized packages.
 License: GPL (>= 3)
-URL: https://packages.tesselle.org/aion/,
-        https://github.com/tesselle/aion
-BugReports: https://github.com/tesselle/aion/issues
+URL: https://codeberg.org/tesselle/aion,
+        https://packages.tesselle.org/aion/
+BugReports: https://codeberg.org/tesselle/aion/issues
 Depends: R (>= 3.3)
-Imports: arkhe (>= 1.9.0), graphics, grDevices, methods, stats, utils
-Suggests: folio (>= 1.5.0), knitr, markdown, rsvg, svglite,
+Imports: arkhe (>= 1.10.0), graphics, grDevices, methods, stats, utils
+Suggests: folio (>= 1.5.0), igraph, knitr, markdown, rsvg, svglite,
         tinysnapshot, tinytest
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
+X-schema.org-applicationCategory: Archaeological Science
+X-schema.org-isPartOf: https://www.tesselle.org
+X-schema.org-keywords: time-series, r-package, archaeology,
+        archaeological-science, chronology, r-package
 Collate: 'AllClasses.R' 'AllGenerics.R' 'aion-internal.R'
         'aion-package.R' 'axis.R' 'calendar-gregorian.R'
         'calendar-julian.R' 'calendar.R' 'coerce.R' 'convert.R'
-        'data.R' 'intervals.R' 'mutators.R' 'operators.R' 'overlap.R'
-        'plot.R' 'series.R' 'show.R' 'span.R' 'subset.R' 'time.R'
-        'validate.R' 'year.R' 'zzz.R'
+        'data.R' 'format.R' 'graph.R' 'intervals.R' 'mutators.R'
+        'operators.R' 'overlap.R' 'plot.R' 'series.R' 'show.R' 'span.R'
+        'subset.R' 'time.R' 'validate.R' 'year.R' 'zzz.R'
 NeedsCompilation: no
-Packaged: 2024-12-10 10:27:56 UTC; nicolas
+Packaged: 2025-02-27 01:13:06 UTC; nicolas
 Author: Nicolas Frerebeau [aut, cre] (<https://orcid.org/0000-0001-5759-4944>),
   Joe Roe [aut] (<https://orcid.org/0000-0002-1011-1244>),
-  Brice Lebrun [ctb] (<https://orcid.org/0000-0001-7503-8685>, Logo
+  Brice Lebrun [art] (<https://orcid.org/0000-0001-7503-8685>, Logo
     designer),
-  Université Bordeaux Montaigne [fnd],
-  CNRS [fnd]
+  Université Bordeaux Montaigne [fnd] (03pbgwk21),
+  CNRS [fnd] (02feahw73)
 Maintainer: Nicolas Frerebeau <nicolas.frerebeau@u-bordeaux-montaigne.fr>
 Repository: CRAN
-Date/Publication: 2024-12-10 10:50:12 UTC
+Date/Publication: 2025-02-27 03:20:02 UTC

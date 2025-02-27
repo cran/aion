@@ -1,5 +1,14 @@
 Sys.setenv(LANGUAGE = "en") # Force locale
-options(aion.calendar = calendar("CE"))
+
+# Default calendar =============================================================
+expect_identical(get_calendar(), CE())
+expect_identical(set_calendar("BCE"), BCE())
+expect_identical(get_calendar(), BCE())
+expect_identical(set_calendar(), CE()) # Reset
+
+options("aion.calendar" = BCE())
+expect_error(get_calendar())
+options("aion.calendar" = NULL)
 
 # Unknown calendar =============================================================
 expect_error(calendar("XXX"), "Unknown calendar")
@@ -7,6 +16,7 @@ expect_error(calendar("XXX"), "Unknown calendar")
 # Gregorian calendar ===========================================================
 G <- calendar("BP")
 
+expect_true(is_calendar(G))
 expect_true(is_gregorian(G))
 expect_false(is_julian(G))
 
@@ -21,6 +31,7 @@ expect_identical(calendar_year(G), 365.2425)
 # Julian calendar ==============================================================
 J <- calendar("julian")
 
+expect_true(is_calendar(J))
 expect_true(is_julian(J))
 expect_false(is_gregorian(J))
 

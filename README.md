@@ -5,9 +5,6 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/tesselle/aion/workflows/R-CMD-check/badge.svg)](https://github.com/tesselle/aion/actions)
-[![codecov](https://codecov.io/gh/tesselle/aion/branch/main/graph/badge.svg?token=UgoOXsZW86)](https://app.codecov.io/gh/tesselle/aion)
-[![CodeFactor](https://www.codefactor.io/repository/github/tesselle/aion/badge/main)](https://www.codefactor.io/repository/github/tesselle/aion/overview/main)
 [![Dependencies](https://tinyverse.netlify.app/badge/aion)](https://cran.r-project.org/package=aion)
 
 <a href="https://tesselle.r-universe.dev/aion"
@@ -65,13 +62,13 @@ offers a simple API that can be used by other specialized packages (see
 To cite aion in publications use:
 
 Frerebeau N (2024). “aion: An R Package to Represent Archaeological Time
-Series.” *Journal of Open Source Software*, *9*(96).
+Series.” *Journal of Open Source Software*, *9*(96), 6210.
 <doi:10.21105/joss.06210> <https://doi.org/10.21105/joss.06210>.
 
-Frerebeau N, Roe J (2024). *aion: Archaeological Time Series*.
+Frerebeau N, Roe J (2025). *aion: Archaeological Time Series*.
 Université Bordeaux Montaigne, Pessac, France.
 <doi:10.5281/zenodo.8032278> <https://doi.org/10.5281/zenodo.8032278>, R
-package version 1.3.0, <https://packages.tesselle.org/aion/>.
+package version 1.4.0, <https://packages.tesselle.org/aion/>.
 
 This package is a part of the tesselle project
 <https://www.tesselle.org>.
@@ -85,11 +82,11 @@ You can install the released version of **aion** from
 install.packages("aion")
 ```
 
-And the development version from [GitHub](https://github.com/) with:
+And the development version from [Codeberg](https://codeberg.org/) with:
 
 ``` r
 # install.packages("remotes")
-remotes::install_github("tesselle/aion")
+remotes::install_git("https://codeberg.org/tesselle/aion")
 ```
 
 ## Usage
