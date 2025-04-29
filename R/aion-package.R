@@ -2,15 +2,15 @@
 #'  \tabular{ll}{
 #'   **Package:** \tab aion \cr
 #'   **Type:** \tab Package \cr
-#'   **Version:** \tab 1.4.0 \cr
+#'   **Version:** \tab 1.5.0 \cr
 #'   **License:** \tab GPL-3 \cr
 #'   **Zenodo:** \tab \doi{10.5281/zenodo.8032278} \cr
 #'  }
 #'
 #' @section Package options:
 #'  \pkg{aion} uses the following [options()] to configure behaviour:
-#'  * `aion.calendar`: a function that returns a [`TimeScale-class`] object
-#'    specifying the default calendar (see [get_calendar()]).
+#'  * `aion.verbose`: a [`logical`] scalar. Should \R report extra information
+#'    on progress? Defaults to [interactive()].
 #'
 #' @author
 #'  **Full list of authors and contributors** (alphabetic order):

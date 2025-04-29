@@ -14,7 +14,7 @@ A toolkit for archaeological time series and time intervals. This package provid
 \tabular{ll}{
 \strong{Package:} \tab aion \cr
 \strong{Type:} \tab Package \cr
-\strong{Version:} \tab 1.4.0 \cr
+\strong{Version:} \tab 1.5.0 \cr
 \strong{License:} \tab GPL-3 \cr
 \strong{Zenodo:} \tab \doi{10.5281/zenodo.8032278} \cr
 }
@@ -23,8 +23,8 @@ A toolkit for archaeological time series and time intervals. This package provid
 
 \pkg{aion} uses the following \code{\link[=options]{options()}} to configure behaviour:
 \itemize{
-\item \code{aion.calendar}: a function that returns a \code{\linkS4class{TimeScale}} object
-specifying the default calendar (see \code{\link[=get_calendar]{get_calendar()}}).
+\item \code{aion.verbose}: a \code{\link{logical}} scalar. Should \R report extra information
+on progress? Defaults to \code{\link[=interactive]{interactive()}}.
 }
 }
 
