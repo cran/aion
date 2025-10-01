@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: aion 1.1.0.9000\n"
-"POT-Creation-Date: 2025-02-27 00:33+0100\n"
-"PO-Revision-Date: 2025-03-02 15:11+0000\n"
+"POT-Creation-Date: 2025-09-30 19:35+0200\n"
+"PO-Revision-Date: 2025-06-03 15:58+0000\n"
 "Last-Translator: nfrerebeau <nicolas.frerebeau@u-bordeaux-montaigne.fr>\n"
 "Language-Team: French <https://translate.codeberg.org/projects/tesselle/aion/"
 "fr/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.10.2\n"
+"X-Generator: Weblate 5.11.4\n"
 
 #: calendar-julian.R:33
 msgid "There is no year zero in the Julian calendar."
@@ -69,29 +69,41 @@ msgstr "è. c."
 msgid "Common Era"
 msgstr "Ère commune"
 
-#: calendar.R:105
-msgid "Default calendar is invalid."
-msgstr "Le calendrier par défaut est invalide."
+#: calendar.R:111
+msgid "Unspecified calendar."
+msgstr "Calendrier non spécifié."
 
-#: calendar.R:189
+#: calendar.R:116
+msgid "Invalid calendar."
+msgstr "Calendrier invalide."
+
+#: calendar.R:191
 msgid "Gregorian years"
 msgstr "Années grégoriennes"
 
-#: calendar.R:190
+#: calendar.R:192
 msgid "Julian years"
 msgstr "Années juliennes"
 
-#: calendar.R:191
+#: calendar.R:193
 msgid "Undefined"
 msgstr "Non défini"
 
-#: graph.R:29
-msgid "This is not an interval graph!"
-msgstr "Ceci n'est pas un graph d'intervalles !"
+#: graph.R:136
+msgid "This is not a stratigraphic graph!"
+msgstr "Ceci n'est pas un graphe stratigraphique !"
 
-#: graph.R:30
-msgid "Length of the shortest circle: %g."
-msgstr "Longueur du cycle le plus court : %g."
+#: graph.R:138
+msgid "This is not a directed acyclic graph."
+msgstr "Ce n'est pas un graphe orienté acyclique."
+
+#: graph.R:147
+msgid "This is not an interval graph!"
+msgstr "Ceci n'est pas un graphe d'intervalles !"
+
+#: graph.R:149
+msgid "This is not a chordal graph."
+msgstr "Ce n'est pas un graphe cordal."
 
 #: intervals.R:44 series.R:43
 msgid "%s is already expressed in rata die: %s is ignored."

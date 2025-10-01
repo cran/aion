@@ -1,6 +1,6 @@
 Package: aion
 Title: Archaeological Time Series
-Version: 1.5.0
+Version: 1.6.0
 Authors@R: c(
     person("Nicolas", "Frerebeau", , "nicolas.frerebeau@u-bordeaux-montaigne.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5759-4944")),
@@ -23,33 +23,36 @@ Description: A toolkit for archaeological time series and time intervals.
     can be used by other specialized packages.
 License: GPL (>= 3)
 URL: https://codeberg.org/tesselle/aion,
+        https://tesselle.r-universe.dev/aion,
         https://packages.tesselle.org/aion/
 BugReports: https://codeberg.org/tesselle/aion/issues
-Depends: R (>= 3.3)
+Depends: R (>= 3.5)
 Imports: arkhe (>= 1.10.0), graphics, grDevices, methods, stats, utils
-Suggests: folio (>= 1.5.0), knitr, markdown, rsvg, svglite,
-        tinysnapshot, tinytest
+Suggests: folio (>= 1.5.0), fontquiver, igraph, knitr, markdown,
+        relations, rsvg, svglite, tinysnapshot (>= 0.2.0), tinytest
 VignetteBuilder: knitr
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 X-schema.org-applicationCategory: Archaeological Science
 X-schema.org-isPartOf: https://www.tesselle.org
-X-schema.org-keywords: time-series, r-package, archaeology,
-        archaeological-science, chronology, r-package
+X-schema.org-keywords: time-series, time-intervals, chronology,
+        stratigraphy, archaeology, archaeological-science, r-package
 Collate: 'AllClasses.R' 'AllGenerics.R' 'aion-internal.R'
         'aion-package.R' 'axis.R' 'calendar-gregorian.R'
         'calendar-julian.R' 'calendar.R' 'coerce.R' 'convert.R'
-        'data.R' 'format.R' 'intervals.R' 'mutators.R' 'operators.R'
-        'overlap.R' 'plot.R' 'series.R' 'show.R' 'span.R' 'subset.R'
-        'time.R' 'validate.R' 'year.R' 'zzz.R'
+        'data.R' 'format.R' 'graph.R' 'intervals.R' 'mutators.R'
+        'operators.R' 'overlap.R' 'plot.R' 'relations.R' 'series.R'
+        'show.R' 'span.R' 'subset.R' 'time.R' 'validate.R' 'year.R'
+        'zzz.R'
 NeedsCompilation: no
-Packaged: 2025-04-29 15:45:05 UTC; nfrerebeau
-Author: Nicolas Frerebeau [aut, cre] (<https://orcid.org/0000-0001-5759-4944>),
-  Joe Roe [aut] (<https://orcid.org/0000-0002-1011-1244>),
-  Brice Lebrun [art] (<https://orcid.org/0000-0001-7503-8685>, Logo
-    designer),
-  Université Bordeaux Montaigne [fnd] (03pbgwk21),
-  CNRS [fnd] (02feahw73)
+Packaged: 2025-10-01 15:02:44 UTC; nfrerebeau
+Author: Nicolas Frerebeau [aut, cre] (ORCID:
+    <https://orcid.org/0000-0001-5759-4944>),
+  Joe Roe [aut] (ORCID: <https://orcid.org/0000-0002-1011-1244>),
+  Brice Lebrun [art] (ORCID: <https://orcid.org/0000-0001-7503-8685>,
+    Logo designer),
+  Université Bordeaux Montaigne [fnd] (ROR: <https://ror.org/03pbgwk21>),
+  CNRS [fnd] (ROR: <https://ror.org/02feahw73>)
 Repository: CRAN
-Date/Publication: 2025-04-29 16:10:02 UTC
+Date/Publication: 2025-10-01 15:20:02 UTC

@@ -49,7 +49,11 @@ plot(int) # Default calendar
 ## Overlap
 overlap(int, calendar = CE())
 }
+\seealso{
+Other temporal relations: 
+\code{\link{relations}}
+}
 \author{
 N. Frerebeau
 }
-\concept{chronological reasoning tools}
+\concept{temporal relations}

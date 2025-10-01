@@ -34,6 +34,21 @@ NULL
 #' @rdname labels
 NULL
 
+#' Names
+#'
+#' Get or set the names of an object.
+#' @param x An \R object.
+#' @param value	A [`character`] vector of up to the same length as `x`, or
+#'  `NULL`.
+#' @return
+#'  The updated object.
+#' @author N. Frerebeau
+#' @docType methods
+#' @family mutators
+#' @name names
+#' @rdname names
+NULL
+
 #' Length
 #'
 #' Get the length of an object.
@@ -553,32 +568,6 @@ setGeneric(
   valueClass = "TimeIntervals"
 )
 
-# Chronological Reasoning ======================================================
-#' Time Overlap
-#'
-#' Computes the length of overlap of time intervals.
-#' @param x A [`TimeIntervals-class`] object.
-#' @param calendar A [`TimeScale-class`] object specifying the target calendar
-#'  (see [calendar()]). If `NULL` (the default), *rata die* are returned.
-#' @param aggregate A [`logical`] scalar: should disjoint intervals referring to
-#'  the same event be aggregated?
-#' @param ... Currently not used.
-#' @details
-#'  The overlap of two time intervals is a difference between the minimum value
-#'  of the two upper boundaries and the maximum value of the two lower
-#'  boundaries, plus 1.
-#' @return
-#'  A symmetric `numeric` [`matrix`] of years.
-#' @example inst/examples/ex-intervals.R
-#' @author N. Frerebeau
-#' @docType methods
-#' @family chronological reasoning tools
-#' @aliases overlap-method
-setGeneric(
-  name = "overlap",
-  def = function(x, ...) standardGeneric("overlap")
-)
-
 # Tools ========================================================================
 #' Terminal Times
 #'
@@ -757,3 +746,330 @@ NULL
 #' @name year_axis
 #' @rdname year_axis
 NULL
+
+# Chronological Reasoning ======================================================
+#' Create a Graph
+#'
+#' Creates an interval or a stratigraphic graph.
+#' @param object A [`TimeIntervals-class`] object or a two-columns `character`
+#'  [`matrix`] of edges (i.e. where each row specifies one relation element).
+#' @param type A [`character`] string specifying the type of the graph to be
+#'  computed. It must be one of "`interval`" (the default) or "`stratigraphy`"
+#'  (see details). Any unambiguous substring can be given.
+#' @param direction A [`character`] string specifying the direction of the
+#'  relations in `x`. It must be one of "`above`" (the default) or "`below`"
+#'  (see details). Any unambiguous substring can be given.
+#'  Only relevant if `type` is "`stratigraphy`".
+#' @param verbose A [`logical`] scalar: should \R report extra information
+#'  on progress?
+#' @param ... Currently not used.
+#' @details
+#'  \describe{
+#'   \item{`interval`}{An interval graph is the graph showing intersecting
+#'   intervals on a line. As time is linear and not circular, an interval graph
+#'   contains no cycles with more than three edges and no shortcuts (it must be
+#'   a chordal graph).}
+#'   \item{`stratigraphy`}{A stratigraphic graph represents the directed
+#'   relationships between temporal units (archaeological deposits), from the
+#'   most recent to the oldest (Harris 1997). It can be formally defined as a
+#'   directed acyclic graph (DAG), in which each vertex represents a layer and
+#'   the edges represent stratigraphic relations.}
+#'  }
+#' @return
+#'  An \pkg{igraph} graph object.
+#' @note
+#'  Experimental.
+#'
+#'  The \pkg{igraph} and \pkg{relations} packages need to be installed on your
+#'  machine.
+#' @references
+#'  Harris, Edward C., 1997. *Principles of Archaeological Stratigraphy*.
+#'  Seconde edition. Academic Press.
+#' @example inst/examples/ex-graph.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family graph tools
+#' @aliases graph_create-method
+setGeneric(
+  name = "graph_create",
+  def = function(object, ...) standardGeneric("graph_create")
+)
+
+#' Prune a Graph
+#'
+#' Removes redundant relations from a graph.
+#' @param object An \pkg{igraph} object (typically returned by
+#'  [graph_create()]).
+#' @param reduce A [`logical`] scalar: should transitive reduction be performed?
+#'  Only used if `object` is a directed acyclic graph.
+#' @param remove_multiple A [`logical`] scalar: should multiple edges be
+#'  removed?
+#' @param remove_loops A [`logical`] scalar: should loop edges be removed?
+#' @param ... Currently not used.
+#' @return
+#'  An \pkg{igraph} graph object.
+#' @note
+#'  Experimental.
+#'
+#'  The \pkg{igraph} and \pkg{relations} packages need to be installed on your
+#'  machine.
+#' @example inst/examples/ex-graph.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family graph tools
+#' @aliases graph_prune-method
+setGeneric(
+  name = "graph_prune",
+  def = function(object, ...) standardGeneric("graph_prune")
+)
+
+# Temporal Relations ===========================================================
+#' Time Overlap
+#'
+#' Computes the length of overlap of time intervals.
+#' @param x A [`TimeIntervals-class`] object.
+#' @param calendar A [`TimeScale-class`] object specifying the target calendar
+#'  (see [calendar()]). If `NULL` (the default), *rata die* are returned.
+#' @param aggregate A [`logical`] scalar: should disjoint intervals referring to
+#'  the same event be aggregated?
+#' @param ... Currently not used.
+#' @details
+#'  The overlap of two time intervals is a difference between the minimum value
+#'  of the two upper boundaries and the maximum value of the two lower
+#'  boundaries, plus 1.
+#' @return
+#'  A symmetric `numeric` [`matrix`] of years.
+#' @example inst/examples/ex-intervals.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family temporal relations
+#' @aliases overlap-method
+setGeneric(
+  name = "overlap",
+  def = function(x, ...) standardGeneric("overlap")
+)
+
+#' Temporal Relations
+#'
+#' Test for the logical relation between time intervals according to Allen's
+#' typology.
+#' @param x A [`TimeIntervals-class`] object.
+#' @param ... Currently not used.
+#' @details
+#'  Allen (1983) proposed thirteen basic relations between time intervals that
+#'  are (Alspaugh 2019):
+#'
+#'  * **Distinct**: no pair of definite intervals can be related by more than
+#'    one of the relationships.
+#'  * **Exhaustive:** any pair of definite intervals are described by one of the
+#'    relations.
+#'  * **Qualitative:** no numeric time spans are considered.
+#'
+#' \tabular{lrlr}{
+#'  **Relation** \tab     \tab     \tab  **Converse** \cr
+#'  precedes     \tab (p) \tab (P) \tab   preceded by \cr
+#'  meets        \tab (m) \tab (M) \tab        met by \cr
+#'  overlaps     \tab (o) \tab (O) \tab overlapped by \cr
+#'  finished by  \tab (F) \tab (f) \tab      finishes \cr
+#'  contains     \tab (D) \tab (d) \tab        during \cr
+#'  starts       \tab (s) \tab (S) \tab    started by \cr
+#'  equals       \tab (e) \tab     \tab               \cr
+#' }
+#'
+#' A *precedes* B
+#'
+#' ```
+#' A ===
+#' B     ===
+#' ```
+#'
+#' A *preceded by* B
+#'
+#' ```
+#' A     ===
+#' B ===
+#' ```
+#'
+#' A *meets* B
+#'
+#' ```
+#' A ===
+#' B    ===
+#' ```
+#'
+#' A *met by* B
+#'
+#' ```
+#' A ===
+#' B    ===
+#' ```
+#'
+#' A *overlaps* B
+#'
+#' ```
+#' A ===
+#' B   ===
+#' ```
+#'
+#' A *overlapped by* B
+#'
+#' ```
+#' A   ===
+#' B ===
+#' ```
+#'
+#' A *finished by* B
+#'
+#' ```
+#' A =====
+#' B   ===
+#' ```
+#'
+#' A *finishes* B
+#'
+#' ```
+#' A   ===
+#' B =====
+#' ```
+#'
+#' A *contains* B
+#'
+#' ```
+#' A =====
+#' B  ===
+#' ```
+#'
+#' A *during* B
+#'
+#' ```
+#' A  ===
+#' B =====
+#' ```
+#'
+#' A *starts* B
+#'
+#' ```
+#' A ===
+#' B =====
+#' ```
+#'
+#' A *started by* B
+#'
+#' ```
+#' A =====
+#' B ===
+#' ```
+#'
+#' A *equals* B
+#'
+#' ```
+#' A ===
+#' B ===
+#' ```
+#'
+#' @return
+#'  A two-columns `matrix` where each row specifies one relation.
+#' @references
+#'  Allen, J. F. (1983). Maintaining Knowledge about Temporal Intervals.
+#'  *Communications of the ACM*, 26(11): 832-843. \doi{10.1145/182.358434}.
+#'
+#'  Alspaugh, T. (2019). Allen's Interval Algebra.
+#'  URL: \url{https://thomasalspaugh.org/pub/fnd/allen.html}.
+#' @example inst/examples/ex-relation.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family temporal relations
+#' @name relations
+#' @rdname relations
+NULL
+
+#' @rdname relations
+#' @aliases precedes-method
+setGeneric(
+  name = "precedes",
+  def = function(x, ...) standardGeneric("precedes")
+)
+
+#' @rdname relations
+#' @aliases preceded_by-method
+setGeneric(
+  name = "preceded_by",
+  def = function(x, ...) standardGeneric("preceded_by")
+)
+
+#' @rdname relations
+#' @aliases meets-method
+setGeneric(
+  name = "meets",
+  def = function(x, ...) standardGeneric("meets")
+)
+
+#' @rdname relations
+#' @aliases met_by-method
+setGeneric(
+  name = "met_by",
+  def = function(x, ...) standardGeneric("met_by")
+)
+
+#' @rdname relations
+#' @aliases overlaps-method
+setGeneric(
+  name = "overlaps",
+  def = function(x, ...) standardGeneric("overlaps")
+)
+
+#' @rdname relations
+#' @aliases overlapped_by-method
+setGeneric(
+  name = "overlapped_by",
+  def = function(x, ...) standardGeneric("overlapped_by")
+)
+
+#' @rdname relations
+#' @aliases finishes-method
+setGeneric(
+  name = "finishes",
+  def = function(x, ...) standardGeneric("finishes")
+)
+
+#' @rdname relations
+#' @aliases finished_by-method
+setGeneric(
+  name = "finished_by",
+  def = function(x, ...) standardGeneric("finished_by")
+)
+
+#' @rdname relations
+#' @aliases contains-method
+setGeneric(
+  name = "contains",
+  def = function(x, ...) standardGeneric("contains")
+)
+
+#' @rdname relations
+#' @aliases during-method
+setGeneric(
+  name = "during",
+  def = function(x, ...) standardGeneric("during")
+)
+
+#' @rdname relations
+#' @aliases starts-method
+setGeneric(
+  name = "starts",
+  def = function(x, ...) standardGeneric("starts")
+)
+
+#' @rdname relations
+#' @aliases started_by-method
+setGeneric(
+  name = "started_by",
+  def = function(x, ...) standardGeneric("started_by")
+)
+
+#' @rdname relations
+#' @aliases equals-method
+setGeneric(
+  name = "equals",
+  def = function(x, ...) standardGeneric("equals")
+)

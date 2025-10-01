@@ -5,9 +5,16 @@
 
 <!-- badges: start -->
 
-[![Code
-coverage](https://packages.tesselle.org/aion/coverage/badge.svg)](https://packages.tesselle.org/aion/coverage/)
-[![Dependencies](https://tinyverse.netlify.app/badge/aion)](https://cran.r-project.org/package=aion)
+<a href="https://ci.codeberg.org/repos/14685" class="pkgdown-devel"><img
+src="https://ci.codeberg.org/api/badges/14685/status.svg"
+alt="status-badge" /></a>
+<a href="https://packages.tesselle.org/aion/coverage/"
+class="pkgdown-devel"><img
+src="https://packages.tesselle.org/aion/coverage/badge.svg"
+alt="Code coverage" /></a>
+<a href="https://cran.r-project.org/package=aion"
+class="pkgdown-devel"><img
+src="https://tinyverse.netlify.app/badge/aion" alt="Dependencies" /></a>
 
 <a href="https://tesselle.r-universe.dev/aion"
 class="pkgdown-devel"><img
@@ -70,7 +77,7 @@ Series.” *Journal of Open Source Software*, *9*(96), 6210.
 Frerebeau N, Roe J (2025). *aion: Archaeological Time Series*.
 Université Bordeaux Montaigne, Pessac, France.
 <doi:10.5281/zenodo.8032278> <https://doi.org/10.5281/zenodo.8032278>, R
-package version 1.5.0, <https://packages.tesselle.org/aion/>.
+package version 1.6.0, <https://packages.tesselle.org/aion/>.
 
 This package is a part of the tesselle project
 <https://www.tesselle.org>.
@@ -159,9 +166,9 @@ Languages currently available are English (`en`) and French (`fr`).
 
 ## Related Works
 
-- [**era**](https://github.com/joeroe/era) provides a consistent
-  representation of year-based time scales as a numeric vector with an
-  associated era.
+- [**era**](https://cran.r-project.org/package=era) provides a
+  consistent representation of year-based time scales as a numeric
+  vector with an associated era.
 
 ## Contributing
 
@@ -174,11 +181,33 @@ to this project, you agree to abide by its terms.
 <div id="refs" class="references csl-bib-body hanging-indent"
 entry-spacing="0">
 
+<div id="ref-allen1983" class="csl-entry">
+
+Allen, James F. 1983. “Maintaining Knowledge about Temporal Intervals.”
+*Communications of the ACM* 26 (11): 832–43.
+<https://doi.org/10.1145/182.358434>.
+
+</div>
+
+<div id="ref-alspaugh2019" class="csl-entry">
+
+Alspaugh, Thomas. 2019. “Allen’s Interval Algebra.” 2019.
+<https://thomasalspaugh.org/pub/fnd/allen.html>.
+
+</div>
+
 <div id="ref-frerebeau2024" class="csl-entry">
 
-Frerebeau, Nicolas. 2024. “Aion: An R Package to Represent
-Archaeological TimeSeries.” *Journal of Open Source Software* 9 (96):
-6210. <https://doi.org/10.21105/joss.06210>.
+Frerebeau, Nicolas. 2024. “<span class="nocase">aion</span>: An R
+Package to Represent Archaeological Time Series.” *Journal of Open
+Source Software* 9 (96): 6210. <https://doi.org/10.21105/joss.06210>.
+
+</div>
+
+<div id="ref-harris1997" class="csl-entry">
+
+Harris, Edward C. 1997. *Principles of Archaeological Stratigraphy*.
+Seconde edition. London: Academic Press.
 
 </div>
 

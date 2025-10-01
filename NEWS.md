@@ -1,3 +1,11 @@
+# aion 1.6.0
+## New classes and methods
+* Add `graph_create()` to compute an interval or a stratigraphic graph.
+* Add `graph_prune()` to remove redundant relations from a graph.
+* Add a `format()` method for `TimeIntervals` objects.
+* Add `names()` and `names()<-` methods for `TimeIntervals` objects.
+* Add `precedes()`, `preceded_by()`, `meets()`, `met_by()`, `overlaps()`, `overlapped_by()`, `finishes()`, `finished_by()`, `contains()`, `during()` `starts()`, `started_by()` and `equals()` to test for logical relation between time intervals.
+
 # aion 1.5.0
 ## Enhancements
 * The `plot()` method for `TimeIntervals` gained a new `groups` argument.
