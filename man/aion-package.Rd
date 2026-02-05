@@ -12,7 +12,7 @@ A toolkit for archaeological time series and time intervals. This package provid
 }
 \details{
 \tabular{ll}{
-\strong{Version} \tab 1.6.0 \cr
+\strong{Version} \tab 1.7.0 \cr
 \strong{License} \tab GPL-3 \cr
 \strong{CRAN DOI} \tab \doi{10.32614/cran.package.aion} \cr
 \strong{Zenodo DOI} \tab \doi{10.5281/zenodo.8032278} \cr

@@ -20,6 +20,7 @@ Get the length of an object.
 \seealso{
 Other mutators: 
 \code{\link{as.data.frame}()},
+\code{\link{flip}()},
 \code{\link{labels}()},
 \code{\link{names}()},
 \code{\link{subset}()}

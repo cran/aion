@@ -29,7 +29,8 @@ Coerce to a Data Frame
 \itemize{
 \item \code{as.data.frame(TimeSeries)}: Returns a long \code{\link{data.frame}} with the following columns:
 \describe{
-\item{\code{time}}{The (decimal) years at which the time series was sampled.}
+\item{\code{time}}{The sampling times. If \code{calendar} is not \code{NULL}, it is
+expressed in decimal years; otherwise, it is expressed in \emph{rata die}.}
 \item{\code{series}}{The name of the time series.}
 \item{\code{variable}}{The name of the variables.}
 \item{\code{value}}{The observed value.}
@@ -38,8 +39,11 @@ Coerce to a Data Frame
 \item \code{as.data.frame(TimeIntervals)}: Returns a \code{\link{data.frame}} with the following columns:
 \describe{
 \item{\code{label}}{The name of the intervals.}
-\item{\code{start}}{The start time of the intervals, in (decimal) years.}
-\item{\code{end}}{The end time of the intervals, in (decimal) years.}
+\item{\code{start}}{The start time of the intervals. If \code{calendar} is not
+\code{NULL}, it is expressed in decimal years; otherwise, it is expressed in
+\emph{rata die}.}
+\item{\code{end}}{The end time of the intervals. If \code{calendar} is not \code{NULL}, it
+is expressed in decimal years; otherwise, it is expressed in \emph{rata die}.}
 }
 
 }}
@@ -72,6 +76,7 @@ head(df)
 }
 \seealso{
 Other mutators: 
+\code{\link{flip}()},
 \code{\link{labels}()},
 \code{\link{length}()},
 \code{\link{names}()},

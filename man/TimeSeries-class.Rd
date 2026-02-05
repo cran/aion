@@ -9,7 +9,7 @@
 An S4 class to represent time series.
 }
 \details{
-A time series object is an \eqn{n x m x p}{n \times m \times p} array, with
+A time series object is an \eqn{n \times m \times p} array, with
 \eqn{n} being the number of observations, \eqn{m} being the number of series
 and with the \eqn{p} columns of the third dimension containing extra
 variables for each series.
@@ -17,7 +17,7 @@ variables for each series.
 \section{Slots}{
 
 \describe{
-\item{\code{.Data}}{A \eqn{n x m x p}{n \times m \times p} \code{numeric} \code{\link{array}}
+\item{\code{.Data}}{A \eqn{n \times m \times p} \code{numeric} \code{\link{array}}
 giving the observed time-series values.}
 
 \item{\code{.Time}}{A length-\eqn{n} \code{\linkS4class{RataDie}} object.}

@@ -26,6 +26,7 @@ Get or set the names of an object.
 \seealso{
 Other mutators: 
 \code{\link{as.data.frame}()},
+\code{\link{flip}()},
 \code{\link{labels}()},
 \code{\link{length}()},
 \code{\link{subset}()}

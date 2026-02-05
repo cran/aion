@@ -11,6 +11,16 @@ make_par <- function(params, x, n = 1) {
   p
 }
 
+fix_dimnames <- function(x, dim2 = "S", dim3 = "V") {
+  if (is.null(dimnames(x)[[2L]])) {
+    dimnames(x)[[2L]] <- paste0(dim2, seq_len(dim(x)[[2L]]))
+  }
+  if (is.null(dimnames(x)[[3L]])) {
+    dimnames(x)[[3L]] <- paste0(dim3, seq_len(dim(x)[[3L]]))
+  }
+  x
+}
+
 #' Plotting Dimensions of Character Strings
 #'
 #' Convert string length in inch to number of (margin) lines.

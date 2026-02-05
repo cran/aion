@@ -84,6 +84,24 @@ NULL
 #' @rdname subset
 NULL
 
+## Flip ------------------------------------------------------------------------
+#' Transposition
+#'
+#' Transposes a time series object by permuting its dimensions and resizing it.
+#' @param x A \eqn{n \times m \times p} [`TimeSeries-class`] object.
+#' @param ... Currently not used.
+#' @return
+#'  A permuted (\eqn{n \times p \times m}) [`TimeSeries-class`] object.
+#' @example inst/examples/ex-flip.R
+#' @author N. Frerebeau
+#' @docType methods
+#' @family mutators
+setGeneric(
+  name = "flip",
+  def = function(x, ...) standardGeneric("flip"),
+  valueClass = "TimeSeries"
+)
+
 ## Coerce ----------------------------------------------------------------------
 #' Coerce to a Data Frame
 #'

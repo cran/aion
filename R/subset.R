@@ -52,6 +52,22 @@ setMethod(
   }
 )
 
+# Transpose ====================================================================
+#' @export
+#' @rdname flip
+#' @aliases flip,TimeSeries-method
+setMethod(
+  f = "flip",
+  signature = c(x = "TimeSeries"),
+  function(x) {
+    z <- x@.Data
+    z <- fix_dimnames(z) # Fix dimnames (if needed)
+    z <- aperm(z, perm = c(1, 3, 2), resize = TRUE)
+
+    methods::initialize(x, z)
+  }
+)
+
 # Window =======================================================================
 #' @export
 #' @method window TimeSeries

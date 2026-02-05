@@ -1,6 +1,6 @@
 Package: aion
 Title: Archaeological Time Series
-Version: 1.6.0
+Version: 1.7.0
 Authors@R: c(
     person("Nicolas", "Frerebeau", , "nicolas.frerebeau@u-bordeaux-montaigne.fr", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-5759-4944")),
@@ -46,7 +46,7 @@ Collate: 'AllClasses.R' 'AllGenerics.R' 'aion-internal.R'
         'show.R' 'span.R' 'subset.R' 'time.R' 'validate.R' 'year.R'
         'zzz.R'
 NeedsCompilation: no
-Packaged: 2025-10-01 15:02:44 UTC; nfrerebeau
+Packaged: 2026-02-05 13:09:30 UTC; nfrerebeau
 Author: Nicolas Frerebeau [aut, cre] (ORCID:
     <https://orcid.org/0000-0001-5759-4944>),
   Joe Roe [aut] (ORCID: <https://orcid.org/0000-0002-1011-1244>),
@@ -55,4 +55,4 @@ Author: Nicolas Frerebeau [aut, cre] (ORCID:
   Université Bordeaux Montaigne [fnd] (ROR: <https://ror.org/03pbgwk21>),
   CNRS [fnd] (ROR: <https://ror.org/02feahw73>)
 Repository: CRAN
-Date/Publication: 2025-10-01 15:20:02 UTC
+Date/Publication: 2026-02-05 14:00:10 UTC

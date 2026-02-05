@@ -14,7 +14,7 @@ setMethod(
     arkhe::assert_length(time, NROW(object))
 
     ## Set the names of the series
-    n <- dim(object)[2L]
+    n <- dim(object)[[2L]]
     if (!is.null(names)) {
       arkhe::assert_length(names, n)
       dimnames(object)[[2L]] <- names

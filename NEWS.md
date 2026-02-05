@@ -1,3 +1,7 @@
+# aion 1.7.0
+## New classes and methods
+* Add `flip()` to permute dimensions of a `TimeSeries`.
+
 # aion 1.6.0
 ## New classes and methods
 * Add `graph_create()` to compute an interval or a stratigraphic graph.
